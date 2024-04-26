@@ -21,6 +21,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "JCacheDemo"
-include(":app")
-include(":JiangCache")
+rootProject.name = "JiangCache"
+include(":demo")
+include(":lib")
