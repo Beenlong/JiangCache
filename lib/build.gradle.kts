@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    `maven-publish`
 }
 
 android {
@@ -13,6 +14,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
         version = rootProject.version
+
+        aarMetadata {
+            minCompileSdk = 16
+        }
+
     }
 
     buildTypes {
@@ -30,6 +36,20 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.github.beenlong"
+            artifactId = "JiangCache"
+            version = version
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
     }
 }
 
