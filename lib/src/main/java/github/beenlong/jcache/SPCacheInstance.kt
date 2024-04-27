@@ -3,7 +3,7 @@ package github.beenlong.jcache
 import android.content.Context
 
 /**
- * Instance Implement with SharedPreferences
+ * Instance implement with SharedPreferences
  *
  * @param name Name of SharedPreferences
  */
@@ -29,6 +29,10 @@ class SPCacheInstance(context: Context, name: String) : CacheInstance {
             return it as T?
         }
         return null
+    }
+
+    override fun remove(key: String) {
+        sp.edit().remove(key).apply()
     }
 
     override fun clear() {

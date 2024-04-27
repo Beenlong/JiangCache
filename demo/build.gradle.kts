@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    namespace = "github.beenlong.jcachedemo"
+    namespace = "com.github.beenlong.jcachedemo"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "github.beenlong.jcachedemo"
+        applicationId = "com.github.beenlong.jcachedemo"
         minSdk = 16
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = rootProject.version.toString()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

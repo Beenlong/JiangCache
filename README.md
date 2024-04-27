@@ -1,2 +1,3 @@
 # JiangCache
-Cache lib &amp; framwork for Android
+Cache lib &amp; framework for Android
+
