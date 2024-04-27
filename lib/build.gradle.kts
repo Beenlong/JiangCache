@@ -53,29 +53,39 @@ publishing {
     }
 }
 
+val releasePath = "${rootProject.projectDir}/build/"
 task("release") {
     //打包库和源码，并输出到根目录
     description = "Build and arr source"
     group = "build"
     dependsOn(":lib:releaseSourcesJar", ":lib:build")
 
-    val outPath = "${rootProject.projectDir}/build/"
-    val outArr = File(outPath, "jc-$version-release.arr")
-    val outSource = File(outPath, "jc-$version-sources.jar")
+    val outArr = File(releasePath, "jc-$version.arr")
+    val outSource = File(releasePath, "jc-$version-sources.jar")
 
     doLast {
-        if (outArr.exists()) outArr.delete()
-        if (outSource.exists()) outArr.delete()
+        val outDir = File(releasePath)
+        outDir.parentFile.mkdirs()
+        outDir.listFiles()?.forEach { it.delete() }
+
         val fileArr = File("${project.projectDir}/build/outputs/aar/lib-release.aar")
-        val fileSource = File("${project.projectDir}/build/libs/lib-v0.1.0-alpha-sources.jar")
+        val fileSource = File("${project.projectDir}/build/libs/lib-$version-sources.jar")
         if (!fileArr.exists()) throw GradleException("$fileArr not found")
         if (!fileSource.exists()) throw GradleException("$fileSource not found")
 
-        outArr.parentFile.mkdirs()
-        outSource.parentFile.mkdirs()
+        fileArr.copyTo(outArr)
+        fileSource.copyTo(outSource)
+    }
+}
 
-        fileArr.copyTo(outArr, true)
-        fileSource.copyTo(outArr, true)
+task("cleanRelease") {
+    group = "build"
+    description = "Clean files build by release task"
+    dependsOn(":lib:clean")
+    doLast {
+        val outDir = File(releasePath)
+        outDir.listFiles()?.forEach { it.delete() }
+        outDir.delete()
     }
 }
 
